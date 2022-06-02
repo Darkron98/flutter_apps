@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/providers.dart';
 
 class CustomBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<BottomProvider>(context);
+    final index = provider.selectedMenuOpt;
     return BottomNavigationBar(
-      currentIndex: 1,
+      onTap: (int i) => provider.selectedMenuOpt = i,
+      currentIndex: index,
       showSelectedLabels: false,
       showUnselectedLabels: false,
       selectedItemColor: Colors.white,
       backgroundColor: Color.fromARGB(255, 129, 192, 243),
       unselectedItemColor: Colors.blue,
-      items: [
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.help,
+            Icons.person,
             size: 40,
           ),
           label: 'Calendar',
@@ -27,7 +32,7 @@ class CustomBottomNav extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.person,
+            Icons.local_grocery_store,
             size: 40,
           ),
           label: 'Person',

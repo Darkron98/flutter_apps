@@ -12,13 +12,16 @@ class PageTitle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.diamond,
-                  color: Colors.blue,
+                Image(
+                  width: 30,
+                  height: 30,
+                  image: NetworkImage(
+                      'https://cdn-icons-png.flaticon.com/512/254/254232.png'),
                 ),
                 Text(
-                  'premium',
+                  'number',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -36,12 +39,14 @@ class PageTitle extends StatelessWidget {
             ),
             Row(
               children: [
-                Icon(
-                  Icons.favorite,
-                  color: Colors.red,
+                Image(
+                  width: 30,
+                  height: 30,
+                  image: NetworkImage(
+                      'https://clipart.world/wp-content/uploads/2020/08/heart-png-transparent.png'),
                 ),
                 Text(
-                  '# of lifes',
+                  'number',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,

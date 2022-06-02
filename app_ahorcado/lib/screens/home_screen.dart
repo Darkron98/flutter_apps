@@ -1,5 +1,9 @@
+import 'package:app_ahorcado/provider/bottom_provider.dart';
+import 'package:app_ahorcado/screens/game_screen.dart';
+import 'package:app_ahorcado/screens/screens.dart';
 import 'package:app_ahorcado/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -7,53 +11,32 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          PageTitle(),
-          SizedBox(height: 200),
-          Column(
-            children: [
-              Text(
-                'Puntuación',
-                style: TextStyle(fontSize: 40),
-              ),
-              Text(
-                '000000000',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 100),
-          FloatingActionButton(
-            elevation: 0,
-            onPressed: () => Navigator.pushNamed(context, 'game'),
-            child: Icon(
-              Icons.play_arrow,
-              size: 50,
-            ),
-          ),
-          SizedBox(height: 100),
-          Column(
-            children: [
-              Text('Nivel'),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.arrow_left),
-                  Icon(Icons.image),
-                  Icon(Icons.image),
-                  Icon(Icons.image),
-                  Icon(Icons.arrow_right),
-                ],
-              )
-            ],
-          ),
-        ],
+      appBar: AppBar(
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        title: PageTitle(),
+      ),
+      body: Center(
+        child: _AppBody(),
       ),
       bottomNavigationBar: CustomBottomNav(),
     );
+  }
+}
+
+class _AppBody extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<BottomProvider>(context);
+    final index = provider.selectedMenuOpt;
+    switch (index) {
+      case 0:
+        return ProfileScreen();
+      case 1:
+        return MainScreen();
+      default:
+        return ShopScreen();
+    }
   }
 }

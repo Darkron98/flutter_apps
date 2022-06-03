@@ -9,8 +9,8 @@ class TitleScreen extends StatelessWidget {
         end: Alignment.bottomCenter,
         stops: [0.5, 0.5],
         colors: [
-          Color(0xff7aeccb),
-          Color(0xff57bcd6),
+          Color(0xff2C2645),
+          Color(0xff2C2645),
         ],
       ),
     );
@@ -39,10 +39,16 @@ class MainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var textStyle = TextStyle(
+    final size = MediaQuery.of(context).size;
+    var textStyle1 = TextStyle(
+      fontSize: 94,
+      fontWeight: FontWeight.bold,
+      color: Color.fromARGB(255, 236, 217, 106),
+    );
+    var textStyle2 = TextStyle(
       fontSize: 64,
       fontWeight: FontWeight.bold,
-      color: Colors.white,
+      color: Color.fromARGB(255, 133, 114, 207),
     );
 
     return SafeArea(
@@ -51,13 +57,18 @@ class MainContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 35),
-          Text('11°', style: textStyle),
-          Text('Miercoles', style: textStyle),
+          SizedBox(height: size.height * 0.09),
+          Row(
+            children: [
+              Text('+', style: textStyle1),
+              Text('Flags', style: textStyle2),
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
           Expanded(child: Container()),
           Icon(
             Icons.keyboard_arrow_down,
-            color: Colors.white,
+            color: Color.fromARGB(255, 95, 82, 148),
             size: 115,
           ),
         ],
@@ -73,12 +84,18 @@ class BackGround extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
-      color: Color(0xff57bcd6),
+      color: Color(0xff2C2645),
       height: double.infinity,
       alignment: Alignment.topCenter,
-      child: Image(
-        image: AssetImage('assets/scroll-1.png'),
+      child: Column(
+        children: [
+          SizedBox(height: size.height * 0.33),
+          Image(
+            image: AssetImage('assets/globe_2.gif'),
+          ),
+        ],
       ),
     );
   }
@@ -106,7 +123,7 @@ class Page2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xff57bcd6),
+      color: Color(0xff2C2645),
       child: Center(
         child: TextButton(
           onPressed: () {},
@@ -114,7 +131,7 @@ class Page2 extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'home_screen');
+                Navigator.pushNamed(context, 'main_screen');
               },
               child: Text(
                 'Bienvenido',
@@ -126,7 +143,7 @@ class Page2 extends StatelessWidget {
             ),
           ),
           style: TextButton.styleFrom(
-            backgroundColor: Color(0xff00a2ff),
+            backgroundColor: Color.fromARGB(255, 95, 82, 148),
             shape: StadiumBorder(),
           ),
         ),

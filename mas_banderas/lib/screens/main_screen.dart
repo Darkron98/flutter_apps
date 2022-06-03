@@ -84,12 +84,14 @@ class _CountryItems extends StatelessWidget {
             _SingleCard(
               icon: Icons.person,
               color: color,
-              text: 'Population',
+              label: 'Population',
+              text: '#',
             ),
             _SingleCard(
               icon: Icons.flag,
               color: color,
-              text: 'Frontiers',
+              label: 'Frontiers',
+              text: 'text',
             ),
           ],
         ),
@@ -98,12 +100,14 @@ class _CountryItems extends StatelessWidget {
             _SingleCard(
               icon: Icons.gps_fixed,
               color: color,
-              text: 'Latitud',
+              label: 'Latitud',
+              text: '#',
             ),
             _SingleCard(
               icon: Icons.location_searching,
               color: color,
-              text: 'Longitud',
+              label: 'Longitud',
+              text: '#',
             ),
           ],
         ),
@@ -112,12 +116,14 @@ class _CountryItems extends StatelessWidget {
             _SingleCard(
               icon: Icons.announcement,
               color: color,
-              text: 'Language',
+              label: 'Language',
+              text: 'text',
             ),
             _SingleCard(
               icon: Icons.attach_money,
               color: color,
-              text: 'Currency',
+              label: 'Currency',
+              text: '#',
             ),
           ],
         ),
@@ -129,16 +135,19 @@ class _CountryItems extends StatelessWidget {
 class _SingleCard extends StatelessWidget {
   final IconData icon;
   final Color color;
+  final String label;
   final String text;
 
   const _SingleCard({
     Key? key,
     required this.icon,
     required this.color,
+    required this.label,
     required this.text,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final color = Color.fromARGB(255, 155, 155, 155);
     return _CardBackGround(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -146,14 +155,24 @@ class _SingleCard extends StatelessWidget {
           Icon(
             icon,
             size: 45,
-            color: Colors.white,
+            color: color,
           ),
           SizedBox(height: 5),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
           Text(
             text,
             style: TextStyle(
               color: color,
-              fontSize: 18,
             ),
           ),
         ],
@@ -181,7 +200,7 @@ class _CardBackGround extends StatelessWidget {
           child: Container(
             height: 130,
             decoration: BoxDecoration(
-              color: Color.fromARGB(175, 133, 135, 138),
+              color: Color.fromARGB(174, 208, 208, 209),
               borderRadius: BorderRadius.circular(20),
             ),
             child: child,

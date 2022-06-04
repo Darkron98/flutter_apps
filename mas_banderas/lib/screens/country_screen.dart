@@ -105,7 +105,7 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.flag,
               color: color,
               label: 'Frontiers',
-              text: country.borders.toString(),
+              text: country.borders == null ? '--' : country.borders.toString(),
             ),
           ],
         ),
@@ -115,13 +115,15 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.swap_vert,
               color: color,
               label: 'Lat',
-              text: country.latlng[0].toString(),
+              text:
+                  country.latlng == null ? '--' : country.latlng![0].toString(),
             ),
             _SingleCard(
               icon: Icons.swap_horiz,
               color: color,
               label: 'Lng',
-              text: country.latlng[1].toString(),
+              text:
+                  country.latlng == null ? '--' : country.latlng![1].toString(),
             ),
           ],
         ),
@@ -131,15 +133,17 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.announcement,
               color: color,
               label: 'Language',
-              text: country.languages.spa,
+              text: country.languages[0].name.toString(),
             ),
             _SingleCard(
               icon: Icons.attach_money,
               color: color,
               label: 'Currency',
-              text: country.currencies.cop.name.toString() +
-                  ' : ' +
-                  country.currencies.cop.symbol.toString(),
+              text: country.currencies == null
+                  ? '--'
+                  : country.currencies![0].name +
+                      ' : ' +
+                      country.currencies![0].symbol,
             ),
           ],
         ),
@@ -250,7 +254,8 @@ class _CountryAvatar extends StatelessWidget {
         ),
         SizedBox(height: 5),
         Text(
-          country.name.nativeName.spa.common,
+          country.name,
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,

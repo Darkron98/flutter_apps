@@ -15,7 +15,7 @@ class CountryScreen extends StatelessWidget {
         children: [
           _BackGround(),
           _CountryCard(
-            country: countryProvider.displayCountry(),
+            country: countryProvider.country!,
           ),
         ],
       ),
@@ -89,12 +89,6 @@ class _CountryItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currencySymbol = country.currencies[0].symbol;
-    final currencyName = country.currencies[0].name;
-    final lat = country.latlng[0];
-    final lng = country.latlng[1];
-    final population = country.population;
-
     final color = Colors.white;
     return Table(
       children: [
@@ -104,13 +98,13 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.person,
               color: color,
               label: 'Population',
-              text: '$population',
+              text: country.population.toString(),
             ),
             _SingleCard(
               icon: Icons.flag,
               color: color,
               label: 'Frontiers',
-              text: '---',
+              text: country.borders.toString(),
             ),
           ],
         ),
@@ -120,13 +114,13 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.gps_fixed,
               color: color,
               label: 'Lat',
-              text: '$lat',
+              text: country.latlng[0].toString(),
             ),
             _SingleCard(
               icon: Icons.location_searching,
               color: color,
               label: 'Lng',
-              text: '$lng',
+              text: country.latlng[1].toString(),
             ),
           ],
         ),
@@ -136,13 +130,15 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.announcement,
               color: color,
               label: 'Language',
-              text: country.languages[0].name,
+              text: country.languages.spa,
             ),
             _SingleCard(
               icon: Icons.attach_money,
               color: color,
               label: 'Currency',
-              text: '$currencyName : $currencySymbol',
+              text: country.currencies.cop.name.toString() +
+                  ' : ' +
+                  country.currencies.cop.symbol.toString(),
             ),
           ],
         ),
@@ -247,7 +243,7 @@ class _CountryAvatar extends StatelessWidget {
         ),
         SizedBox(height: 5),
         Text(
-          country.name,
+          country.name.nativeName.spa.common,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,

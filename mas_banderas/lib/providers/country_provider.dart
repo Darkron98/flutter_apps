@@ -5,24 +5,27 @@ import 'package:mas_banderas/models/country_model.dart';
 
 class CountryProvider extends ChangeNotifier {
   String _domain = 'restcountries.com';
+  CountryModel? country;
 
   CountryProvider() {
     this.displayCountry();
   }
 
-  Future<String> _getJsonData() async {
+  Future<Map<String, dynamic>> _getJsonData() async {
     final url = Uri.parse('https://restcountries.com/v3.1/name/colombia');
     final response = await http.get(url);
-    final data = jsonDecode(response.body).toString();
-    final data2 = json.decode(response.body);
-    print(data2.runtimeType);
-    return (response.body);
+    final map = Map.fromIterable(json.decode(response.body) as List);
+    final List<dynamic> keyList = map.keys.toList();
+    final responseMap = Map<String, dynamic>.from(keyList[0]);
+
+    print('keys: ' + responseMap.keys.toList().toString());
+    return (responseMap);
   }
 
   displayCountry() async {
-    final jasonData = await _getJsonData();
-    //final response = CountryModel.fromJson(jasonData);
+    final jsonData = await _getJsonData();
+    final response = CountryModel.fromJson(jsonData);
+    country = response;
     notifyListeners();
-    //return response;
   }
 }

@@ -117,38 +117,3 @@ class Title extends StatelessWidget {
     );
   }
 }
-
-class Page2 extends StatelessWidget {
-  const Page2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Color(0xff2C2645),
-      child: Center(
-        child: TextButton(
-          onPressed: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'main_screen');
-              },
-              child: Text(
-                'Bienvenido',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                ),
-              ),
-            ),
-          ),
-          style: TextButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 95, 82, 148),
-            shape: StadiumBorder(),
-          ),
-        ),
-      ),
-    );
-  }
-}

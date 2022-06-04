@@ -221,6 +221,8 @@ class _CountryAvatar extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
+          backgroundImage: NetworkImage(
+              'https://www.cajasfuertes-online.es/img/placeholder.png'),
           radius: 50,
         ),
         SizedBox(height: 5),

@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:mas_banderas/models/country_model.dart';
 import 'dart:ui';
+import 'package:provider/provider.dart';
+import 'package:mas_banderas/providers/country_provider.dart';
 
 class CountryScreen extends StatelessWidget {
   const CountryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final countryProvider = Provider.of<CountryProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
           _BackGround(),
-          _CountryCard(),
+          _CountryCard(
+            country: countryProvider.country!,
+          ),
         ],
       ),
     );
@@ -18,6 +24,10 @@ class CountryScreen extends StatelessWidget {
 }
 
 class _CountryCard extends StatelessWidget {
+  final CountryModel country;
+
+  const _CountryCard({Key? key, required this.country}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -25,13 +35,12 @@ class _CountryCard extends StatelessWidget {
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          //mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
               height: size.height * 0.05,
             ),
-            _CountryAvatar(),
-            _CoutryCard(size: size),
+            _CountryAvatar(country: country),
+            _CoutryCard(size: size, country: country),
           ],
         ),
       ],
@@ -40,9 +49,11 @@ class _CountryCard extends StatelessWidget {
 }
 
 class _CoutryCard extends StatelessWidget {
+  final CountryModel country;
   const _CoutryCard({
     Key? key,
     required this.size,
+    required this.country,
   }) : super(key: key);
 
   final Size size;
@@ -61,7 +72,7 @@ class _CoutryCard extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: _CountryItems(),
+            child: _CountryItems(country: country),
           ),
         ),
       ),
@@ -70,12 +81,20 @@ class _CoutryCard extends StatelessWidget {
 }
 
 class _CountryItems extends StatelessWidget {
+  final CountryModel country;
   const _CountryItems({
     Key? key,
+    required this.country,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final currencySymbol = country.currencies[0].symbol;
+    final currencyName = country.currencies[0].name;
+    final lat = country.latlng[0];
+    final lng = country.latlng[1];
+    final population = country.population;
+
     final color = Colors.white;
     return Table(
       children: [
@@ -85,13 +104,13 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.person,
               color: color,
               label: 'Population',
-              text: '#',
+              text: '$population',
             ),
             _SingleCard(
               icon: Icons.flag,
               color: color,
               label: 'Frontiers',
-              text: 'text',
+              text: '---',
             ),
           ],
         ),
@@ -100,14 +119,14 @@ class _CountryItems extends StatelessWidget {
             _SingleCard(
               icon: Icons.gps_fixed,
               color: color,
-              label: 'Latitud',
-              text: '#',
+              label: 'Lat',
+              text: '$lat',
             ),
             _SingleCard(
               icon: Icons.location_searching,
               color: color,
-              label: 'Longitud',
-              text: '#',
+              label: 'Lng',
+              text: '$lng',
             ),
           ],
         ),
@@ -117,13 +136,13 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.announcement,
               color: color,
               label: 'Language',
-              text: 'text',
+              text: country.languages[0].name,
             ),
             _SingleCard(
               icon: Icons.attach_money,
               color: color,
               label: 'Currency',
-              text: '#',
+              text: '$currencyName : $currencySymbol',
             ),
           ],
         ),
@@ -212,8 +231,10 @@ class _CardBackGround extends StatelessWidget {
 }
 
 class _CountryAvatar extends StatelessWidget {
+  final CountryModel country;
   const _CountryAvatar({
     Key? key,
+    required this.country,
   }) : super(key: key);
 
   @override
@@ -221,13 +242,12 @@ class _CountryAvatar extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundImage: NetworkImage(
-              'https://www.cajasfuertes-online.es/img/placeholder.png'),
+          backgroundImage: NetworkImage(country.flags.png),
           radius: 50,
         ),
         SizedBox(height: 5),
         Text(
-          'Country name',
+          country.name,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,

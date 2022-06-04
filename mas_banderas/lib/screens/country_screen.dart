@@ -60,6 +60,7 @@ class _CoutryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.all(15),
       child: ClipRRect(
@@ -67,7 +68,7 @@ class _CoutryCard extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Container(
-            height: 450,
+            height: size.height * 0.562,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
@@ -111,13 +112,13 @@ class _CountryItems extends StatelessWidget {
         TableRow(
           children: [
             _SingleCard(
-              icon: Icons.gps_fixed,
+              icon: Icons.swap_vert,
               color: color,
               label: 'Lat',
               text: country.latlng[0].toString(),
             ),
             _SingleCard(
-              icon: Icons.location_searching,
+              icon: Icons.swap_horiz,
               color: color,
               label: 'Lng',
               text: country.latlng[1].toString(),
@@ -162,6 +163,7 @@ class _SingleCard extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final color = Color.fromARGB(255, 155, 155, 155);
     return _CardBackGround(
       child: Column(
@@ -169,7 +171,7 @@ class _SingleCard extends StatelessWidget {
         children: [
           Icon(
             icon,
-            size: 45,
+            size: size.width * 0.115,
             color: color,
           ),
           SizedBox(height: 5),
@@ -177,7 +179,7 @@ class _SingleCard extends StatelessWidget {
             label,
             style: TextStyle(
               color: color,
-              fontSize: 18,
+              fontSize: size.width * 0.04,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -188,7 +190,10 @@ class _SingleCard extends StatelessWidget {
             text,
             style: TextStyle(
               color: color,
+              fontSize: size.width * 0.03,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
@@ -206,14 +211,15 @@ class _CardBackGround extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(size.height * 0.0125),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Container(
-            height: 130,
+            height: size.height * 0.162,
             decoration: BoxDecoration(
               color: Color.fromARGB(174, 208, 208, 209),
               borderRadius: BorderRadius.circular(20),
@@ -235,11 +241,12 @@ class _CountryAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Column(
       children: [
         CircleAvatar(
           backgroundImage: NetworkImage(country.flags.png),
-          radius: 50,
+          radius: size.width * 0.135,
         ),
         SizedBox(height: 5),
         Text(
@@ -247,7 +254,7 @@ class _CountryAvatar extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontSize: 24,
+            fontSize: size.width * 0.065,
           ),
         ),
       ],

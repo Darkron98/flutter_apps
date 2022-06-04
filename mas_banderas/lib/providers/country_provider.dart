@@ -18,7 +18,7 @@ class CountryProvider extends ChangeNotifier {
     final List<dynamic> keyList = map.keys.toList();
     final responseMap = Map<String, dynamic>.from(keyList[0]);
 
-    print('keys: ' + responseMap.keys.toList().toString());
+    //print('keys: ' + responseMap.keys.toList().toString());
     return (responseMap);
   }
 

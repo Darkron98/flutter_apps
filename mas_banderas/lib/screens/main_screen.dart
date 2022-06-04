@@ -42,12 +42,12 @@ class MainContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     var textStyle1 = TextStyle(
-      fontSize: 94,
+      fontSize: size.width * 0.275,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 236, 217, 106),
     );
     var textStyle2 = TextStyle(
-      fontSize: 64,
+      fontSize: size.width * 0.175,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 133, 114, 207),
     );
@@ -70,7 +70,7 @@ class MainContent extends StatelessWidget {
           Icon(
             Icons.keyboard_arrow_down,
             color: Color.fromARGB(255, 95, 82, 148),
-            size: 115,
+            size: size.width * 0.305,
           ),
         ],
       ),
@@ -89,12 +89,14 @@ class BackGround extends StatelessWidget {
     return Container(
       color: Color(0xff2C2645),
       height: double.infinity,
+      width: double.infinity,
       alignment: Alignment.topCenter,
       child: Column(
         children: [
           SizedBox(height: size.height * 0.33),
           Image(
             image: AssetImage('assets/globe.gif'),
+            width: double.infinity,
           ),
         ],
       ),

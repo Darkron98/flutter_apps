@@ -9,12 +9,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Material App',
-        initialRoute: 'title_screen',
-        routes: {
-          'title_screen': (_) => TitleScreen(),
-          'main_screen': (_) => MainScreen(),
-        });
+      debugShowCheckedModeBanner: false,
+      title: 'Material App',
+      initialRoute: 'title_screen',
+      routes: {
+        'title_screen': (_) => MainScreen(),
+        'main_screen': (_) => CountryScreen(),
+      },
+    );
   }
 }

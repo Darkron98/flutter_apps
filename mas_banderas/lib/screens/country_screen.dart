@@ -152,8 +152,10 @@ class _CountryItems extends StatelessWidget {
               text: country.currencies == null
                   ? 'Irrelevant'
                   : country.currencies![0].name +
-                      ' : ' +
-                      country.currencies![0].symbol,
+                      '\n' +
+                      country.currencies![0].symbol +
+                      ' ' +
+                      country.currencies![0].code,
             ),
           ],
         ),
@@ -202,11 +204,12 @@ class _SingleCard extends StatelessWidget {
           ),
           Text(
             text,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: color,
               fontSize: size.width * 0.03,
             ),
-            maxLines: 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
         ],

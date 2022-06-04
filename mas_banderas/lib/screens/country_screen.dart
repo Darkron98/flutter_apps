@@ -3,6 +3,7 @@ import 'package:mas_banderas/models/country_model.dart';
 import 'dart:ui';
 import 'package:provider/provider.dart';
 import 'package:mas_banderas/providers/country_provider.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 class CountryScreen extends StatelessWidget {
   const CountryScreen({Key? key}) : super(key: key);
@@ -90,6 +91,8 @@ class _CountryItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MoneyFormatter format =
+        MoneyFormatter(amount: country.population.toDouble());
     final color = Colors.white;
     return Table(
       children: [
@@ -99,13 +102,18 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.person,
               color: color,
               label: 'Population',
-              text: country.population.toString(),
+              text: format.output.compactNonSymbol,
             ),
             _SingleCard(
               icon: Icons.flag,
               color: color,
               label: 'Frontiers',
-              text: country.borders == null ? '--' : country.borders.toString(),
+              text: country.borders == null
+                  ? 'Irrelevant'
+                  : country.borders
+                      .toString()
+                      .replaceAll('[', ' ')
+                      .replaceAll(']', ' '),
             ),
           ],
         ),
@@ -115,15 +123,17 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.swap_vert,
               color: color,
               label: 'Lat',
-              text:
-                  country.latlng == null ? '--' : country.latlng![0].toString(),
+              text: country.latlng == null
+                  ? 'Irrelevant'
+                  : country.latlng![0].toString(),
             ),
             _SingleCard(
               icon: Icons.swap_horiz,
               color: color,
               label: 'Lng',
-              text:
-                  country.latlng == null ? '--' : country.latlng![1].toString(),
+              text: country.latlng == null
+                  ? 'Irrelevant'
+                  : country.latlng![1].toString(),
             ),
           ],
         ),
@@ -140,7 +150,7 @@ class _CountryItems extends StatelessWidget {
               color: color,
               label: 'Currency',
               text: country.currencies == null
-                  ? '--'
+                  ? 'Irrelevant'
                   : country.currencies![0].name +
                       ' : ' +
                       country.currencies![0].symbol,

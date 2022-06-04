@@ -4,27 +4,29 @@ import 'package:http/http.dart' as http;
 import 'package:mas_banderas/models/country_model.dart';
 
 class CountryProvider extends ChangeNotifier {
-  String search = 'peru';
+  String? search = 'colombia';
   CountryModel? country;
 
-  CountryProvider() {
+  CountryProvider({search}) {
     this.displayCountry();
   }
 
   Future<Map<String, dynamic>> _getJsonData() async {
-    final url = Uri.parse('https://restcountries.com/v2/name/' + search);
+    final url = Uri.parse(
+        'https://restcountries.com/v2/name/' + search!); //http request
     final response = await http.get(url);
-    final map = Map.fromIterable(json.decode(response.body) as List);
+
+    final map = Map.fromIterable(json.decode(response.body)
+        as List); //response parsing List<dynamic> -> Map<String, dynamic>
     final List<dynamic> keyList = map.keys.toList();
     final responseMap = Map<String, dynamic>.from(keyList[0]);
 
-    //print(responseMap.toString());
     return (responseMap);
   }
 
   displayCountry() async {
     final jsonData = await _getJsonData();
-    final response = CountryModel.fromJson(jsonData);
+    final response = CountryModel.fromJson(jsonData); //response maping in model
     country = response;
     displauCountryConsole(response);
     notifyListeners();

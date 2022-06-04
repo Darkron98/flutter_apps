@@ -94,7 +94,7 @@ class BackGround extends StatelessWidget {
         children: [
           SizedBox(height: size.height * 0.33),
           Image(
-            image: AssetImage('assets/globe_2.gif'),
+            image: AssetImage('assets/globe.gif'),
           ),
         ],
       ),

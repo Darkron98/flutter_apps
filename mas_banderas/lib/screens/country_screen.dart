@@ -15,7 +15,7 @@ class CountryScreen extends StatelessWidget {
         children: [
           _BackGround(),
           _CountryCard(
-            country: countryProvider.country!,
+            country: countryProvider.displayCountry(),
           ),
         ],
       ),

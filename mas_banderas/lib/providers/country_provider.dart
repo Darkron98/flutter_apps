@@ -27,6 +27,7 @@ class CountryProvider extends ChangeNotifier {
   displayCountry() async {
     final jsonData = await _getJsonData();
     final response = CountryModel.fromJson(jsonData); //response maping in model
+
     country = response;
     displauCountryConsole(response);
     notifyListeners();

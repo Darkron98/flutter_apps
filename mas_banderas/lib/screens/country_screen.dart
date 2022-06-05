@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mas_banderas/models/country_model.dart';
+import 'package:mas_banderas/search/country_search_delegate.dart';
 import 'dart:ui';
 import 'package:provider/provider.dart';
 import 'package:mas_banderas/providers/country_provider.dart';
@@ -15,8 +16,9 @@ class CountryScreen extends StatelessWidget {
       body: Stack(
         children: [
           _BackGround(),
-          _CountryCard(
-            country: countryProvider.country!,
+          _CountryInfo(
+            countryProvider: countryProvider,
+            country: countryProvider.country,
           ),
         ],
       ),
@@ -24,10 +26,13 @@ class CountryScreen extends StatelessWidget {
   }
 }
 
-class _CountryCard extends StatelessWidget {
+class _CountryInfo extends StatelessWidget {
   final CountryModel country;
+  final CountryProvider countryProvider;
 
-  const _CountryCard({Key? key, required this.country}) : super(key: key);
+  const _CountryInfo(
+      {Key? key, required this.country, required this.countryProvider})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +42,31 @@ class _CountryCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: size.height * 0.05,
-            ),
+            SizedBox(height: size.height * 0.05),
             _CountryAvatar(country: country),
-            _CoutryCard(size: size, country: country),
+            _CountryCard(size: size, country: country),
+            SizedBox(height: size.height * 0.03),
+            MaterialButton(
+              height: size.height * 0.09,
+              minWidth: size.width * 0.5,
+              onPressed: () {
+                showSearch(
+                    context: context,
+                    delegate: CountrySearchDelegate(
+                      country: country,
+                      countryProvider: countryProvider,
+                    ));
+              },
+              elevation: 0,
+              splashColor: Colors.transparent,
+              child: Icon(
+                Icons.search,
+                size: 40,
+                color: Colors.white,
+              ),
+              shape: StadiumBorder(),
+              color: Color.fromARGB(55, 255, 255, 255),
+            ),
           ],
         ),
       ],
@@ -49,9 +74,9 @@ class _CountryCard extends StatelessWidget {
   }
 }
 
-class _CoutryCard extends StatelessWidget {
+class _CountryCard extends StatelessWidget {
   final CountryModel country;
-  const _CoutryCard({
+  const _CountryCard({
     Key? key,
     required this.size,
     required this.country,
@@ -109,7 +134,7 @@ class _CountryItems extends StatelessWidget {
               color: color,
               label: 'Frontiers',
               text: country.borders == null
-                  ? 'Irrelevant'
+                  ? 'No data'
                   : country.borders
                       .toString()
                       .replaceAll('[', ' ')
@@ -124,7 +149,7 @@ class _CountryItems extends StatelessWidget {
               color: color,
               label: 'Lat',
               text: country.latlng == null
-                  ? 'Irrelevant'
+                  ? 'no data'
                   : country.latlng![0].toString(),
             ),
             _SingleCard(
@@ -132,7 +157,7 @@ class _CountryItems extends StatelessWidget {
               color: color,
               label: 'Lng',
               text: country.latlng == null
-                  ? 'Irrelevant'
+                  ? 'No data'
                   : country.latlng![1].toString(),
             ),
           ],
@@ -150,7 +175,7 @@ class _CountryItems extends StatelessWidget {
               color: color,
               label: 'Currency',
               text: country.currencies == null
-                  ? 'Irrelevant'
+                  ? 'No data'
                   : country.currencies![0].name +
                       '\n' +
                       country.currencies![0].symbol +

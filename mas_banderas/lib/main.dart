@@ -14,7 +14,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => CountryProvider(),
+          create: (_) => CountryProvider('colombia'),
           lazy: false,
         ),
       ],

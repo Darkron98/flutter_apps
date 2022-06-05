@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class CountryModel {

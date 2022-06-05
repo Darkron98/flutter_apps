@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class SingleCard extends StatelessWidget {
+  //singel card implements the country item styles <item icon, item name, item info>
   final IconData icon;
   final Color color;
   final String label;
@@ -24,12 +25,14 @@ class SingleCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
+            //item icon
             icon,
             size: size.width * 0.115,
             color: color,
           ),
           const SizedBox(height: 5),
           Text(
+            //item name
             label,
             style: TextStyle(
               color: color,
@@ -41,6 +44,7 @@ class SingleCard extends StatelessWidget {
             height: 5,
           ),
           Text(
+            //item info
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -57,6 +61,7 @@ class SingleCard extends StatelessWidget {
 }
 
 class _CardBackGround extends StatelessWidget {
+  //info card background styles
   final Widget child;
 
   const _CardBackGround({

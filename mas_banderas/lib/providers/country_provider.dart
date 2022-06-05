@@ -6,6 +6,7 @@ import 'package:mas_banderas/models/country_model.dart';
 class CountryProvider extends ChangeNotifier {
   //final String? search = 'colombia';
   CountryModel country = CountryModel(
+    //default model
     name: 'Country name',
     languages: [Language(iso6392: 'No data', name: 'No data')],
     flag: 'flag',
@@ -21,24 +22,28 @@ class CountryProvider extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> _getJsonData(String name) async {
+    //get data from API
     final url =
         Uri.parse('https://restcountries.com/v2/name/' + name); //http parse
-    final response = await http.get(url); //http parse
+    final response = await http.get(url); //http request
 
     final map = Map.fromIterable(json.decode(response.body)
-        as List); //response parsing List<dynamic> -> Map<String, dynamic>
-    final List<dynamic> keyList = map.keys.toList();
-    final responseMap = Map<String, dynamic>.from(keyList[0]);
+        as List); //response parsing List<dynamic> to Map<String, dynamic>
+    final List<dynamic> keyList =
+        map.keys.toList(); //parse map keys to list<dynamic>
+    final responseMap = Map<String, dynamic>.from(
+        keyList[0]); //parse keylist to map<String, dynamic>
 
     return (responseMap);
   }
 
   displayCountry(String name) async {
     try {
+      //exception
       final jsonData = await _getJsonData(name);
       final response =
           CountryModel.fromJson(jsonData); //response maping in model
-      displauCountryConsole(response);
+      displauCountryConsole(response); // print model data in debug console
       country = response;
       notifyListeners();
       return response;
@@ -52,6 +57,7 @@ class CountryProvider extends ChangeNotifier {
   }
 
   displauCountryConsole(CountryModel country) {
+    //print model data in debug console
     final nombre = country.name;
     final pop = country.population;
     final front = country.borders

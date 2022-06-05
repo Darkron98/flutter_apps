@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       title: '+Flags',
       initialRoute: 'title_screen',
       routes: {
+        //app routes
         'title_screen': (_) => const MainScreen(),
         'main_screen': (_) => const CountryScreen(),
       },

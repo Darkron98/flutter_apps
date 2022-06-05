@@ -4,36 +4,61 @@ import 'package:http/http.dart' as http;
 import 'package:mas_banderas/models/country_model.dart';
 
 class CountryProvider extends ChangeNotifier {
-  String search = 'peru';
-  CountryModel? country;
+  //final String? search = 'colombia';
+  CountryModel country = CountryModel(
+    name: 'Country name',
+    languages: [Language(iso6392: 'No data', name: 'No data')],
+    flag: 'flag',
+    flags: Flags(
+        png:
+            'https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png',
+        svg: ''),
+    population: 0,
+  );
 
-  CountryProvider() {
-    this.displayCountry();
+  CountryProvider(String name) {
+    this.displayCountry(name);
   }
 
-  Future<Map<String, dynamic>> _getJsonData() async {
-    final url = Uri.parse('https://restcountries.com/v2/name/' + search);
-    final response = await http.get(url);
-    final map = Map.fromIterable(json.decode(response.body) as List);
+  Future<Map<String, dynamic>> _getJsonData(String name) async {
+    final url =
+        Uri.parse('https://restcountries.com/v2/name/' + name); //http parse
+    final response = await http.get(url); //http parse
+
+    final map = Map.fromIterable(json.decode(response.body)
+        as List); //response parsing List<dynamic> -> Map<String, dynamic>
     final List<dynamic> keyList = map.keys.toList();
     final responseMap = Map<String, dynamic>.from(keyList[0]);
 
-    //print(responseMap.toString());
     return (responseMap);
   }
 
-  displayCountry() async {
-    final jsonData = await _getJsonData();
-    final response = CountryModel.fromJson(jsonData);
-    country = response;
-    displauCountryConsole(response);
-    notifyListeners();
+  displayCountry(String name) async {
+    try {
+      final jsonData = await _getJsonData(name);
+      final response =
+          CountryModel.fromJson(jsonData); //response maping in model
+      displauCountryConsole(response);
+      country = response;
+      notifyListeners();
+      return response;
+    } catch (e) {
+      final response = country;
+      country = response;
+      displauCountryConsole(response);
+      notifyListeners();
+      return response;
+    }
   }
 
   displauCountryConsole(CountryModel country) {
     final nombre = country.name;
     final pop = country.population;
-    final front = country.borders.toString();
+    final front = country.borders
+        .toString()
+        .replaceAll('[', '\n\t')
+        .replaceAll(']', '')
+        .replaceAll(',', '\n\t');
     final lang = country.languages[0].name;
     final lat = country.latlng == null ? '--' : country.latlng![0];
     final lng = country.latlng == null ? '--' : country.latlng![1];

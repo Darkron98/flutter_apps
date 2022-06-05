@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mas_banderas/models/country_model.dart';
+import 'package:mas_banderas/search/country_search_delegate.dart';
 import 'dart:ui';
 import 'package:provider/provider.dart';
 import 'package:mas_banderas/providers/country_provider.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 class CountryScreen extends StatelessWidget {
   const CountryScreen({Key? key}) : super(key: key);
@@ -14,8 +16,9 @@ class CountryScreen extends StatelessWidget {
       body: Stack(
         children: [
           _BackGround(),
-          _CountryCard(
-            country: countryProvider.country!,
+          _CountryInfo(
+            countryProvider: countryProvider,
+            country: countryProvider.country,
           ),
         ],
       ),
@@ -23,10 +26,13 @@ class CountryScreen extends StatelessWidget {
   }
 }
 
-class _CountryCard extends StatelessWidget {
+class _CountryInfo extends StatelessWidget {
   final CountryModel country;
+  final CountryProvider countryProvider;
 
-  const _CountryCard({Key? key, required this.country}) : super(key: key);
+  const _CountryInfo(
+      {Key? key, required this.country, required this.countryProvider})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +42,31 @@ class _CountryCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: size.height * 0.05,
-            ),
+            SizedBox(height: size.height * 0.05),
             _CountryAvatar(country: country),
-            _CoutryCard(size: size, country: country),
+            _CountryCard(size: size, country: country),
+            SizedBox(height: size.height * 0.03),
+            MaterialButton(
+              height: size.height * 0.09,
+              minWidth: size.width * 0.5,
+              onPressed: () {
+                showSearch(
+                    context: context,
+                    delegate: CountrySearchDelegate(
+                      country: country,
+                      countryProvider: countryProvider,
+                    ));
+              },
+              elevation: 0,
+              splashColor: Colors.transparent,
+              child: Icon(
+                Icons.search,
+                size: 40,
+                color: Colors.white,
+              ),
+              shape: StadiumBorder(),
+              color: Color.fromARGB(55, 255, 255, 255),
+            ),
           ],
         ),
       ],
@@ -48,9 +74,9 @@ class _CountryCard extends StatelessWidget {
   }
 }
 
-class _CoutryCard extends StatelessWidget {
+class _CountryCard extends StatelessWidget {
   final CountryModel country;
-  const _CoutryCard({
+  const _CountryCard({
     Key? key,
     required this.size,
     required this.country,
@@ -90,6 +116,8 @@ class _CountryItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MoneyFormatter format =
+        MoneyFormatter(amount: country.population.toDouble());
     final color = Colors.white;
     return Table(
       children: [
@@ -99,13 +127,18 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.person,
               color: color,
               label: 'Population',
-              text: country.population.toString(),
+              text: format.output.compactNonSymbol,
             ),
             _SingleCard(
               icon: Icons.flag,
               color: color,
               label: 'Frontiers',
-              text: country.borders == null ? '--' : country.borders.toString(),
+              text: country.borders == null
+                  ? 'No data'
+                  : country.borders
+                      .toString()
+                      .replaceAll('[', ' ')
+                      .replaceAll(']', ' '),
             ),
           ],
         ),
@@ -115,15 +148,17 @@ class _CountryItems extends StatelessWidget {
               icon: Icons.swap_vert,
               color: color,
               label: 'Lat',
-              text:
-                  country.latlng == null ? '--' : country.latlng![0].toString(),
+              text: country.latlng == null
+                  ? 'no data'
+                  : country.latlng![0].toString(),
             ),
             _SingleCard(
               icon: Icons.swap_horiz,
               color: color,
               label: 'Lng',
-              text:
-                  country.latlng == null ? '--' : country.latlng![1].toString(),
+              text: country.latlng == null
+                  ? 'No data'
+                  : country.latlng![1].toString(),
             ),
           ],
         ),
@@ -140,10 +175,12 @@ class _CountryItems extends StatelessWidget {
               color: color,
               label: 'Currency',
               text: country.currencies == null
-                  ? '--'
+                  ? 'No data'
                   : country.currencies![0].name +
-                      ' : ' +
-                      country.currencies![0].symbol,
+                      '\n' +
+                      country.currencies![0].symbol +
+                      ' ' +
+                      country.currencies![0].code,
             ),
           ],
         ),
@@ -192,11 +229,12 @@ class _SingleCard extends StatelessWidget {
           ),
           Text(
             text,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: color,
               fontSize: size.width * 0.03,
             ),
-            maxLines: 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
         ],

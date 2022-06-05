@@ -88,8 +88,7 @@ class BackGround extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Container(
       color: Color(0xff2C2645),
-      height: double.infinity,
-      width: double.infinity,
+      width: size.width,
       alignment: Alignment.topCenter,
       child: Column(
         children: [

@@ -8,7 +8,7 @@ class CountryModel {
     required this.name,
     this.currencies,
     required this.languages,
-    required this.translations,
+    this.translations,
     this.latlng,
     this.borders,
     required this.flag,
@@ -19,7 +19,7 @@ class CountryModel {
   String name;
   List<Currency>? currencies;
   List<Language> languages;
-  Translations translations;
+  Translations? translations;
   List<double>? latlng;
   List<String>? borders;
   String flag;
@@ -37,7 +37,9 @@ class CountryModel {
                 json["currencies"].map((x) => Currency.fromMap(x))),
         languages: List<Language>.from(
             json["languages"].map((x) => Language.fromMap(x))),
-        translations: Translations.fromMap(json["translations"]),
+        translations: json["translations"] == null
+            ? null
+            : Translations.fromMap(json["translations"]),
         latlng: json["latlng"] == null
             ? null
             : List<double>.from(json["latlng"].map((x) => x.toDouble())),

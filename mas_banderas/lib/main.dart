@@ -24,6 +24,8 @@ class AppState extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: '+Flags',
       initialRoute: 'title_screen',
       routes: {
-        'title_screen': (_) => MainScreen(),
+        'title_screen': (_) => const MainScreen(),
         'main_screen': (_) => const CountryScreen(),
       },
     );

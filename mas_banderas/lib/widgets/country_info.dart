@@ -13,11 +13,15 @@ class CountryInfo extends StatelessWidget {
   final CountryProvider countryProvider;
 
   const CountryInfo(
-      {Key? key, required this.country, required this.countryProvider})
+      // country info widget
+      {Key? key,
+      required this.country,
+      required this.countryProvider})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // implements screen structure <avatar, country information card, search button>
     final size = MediaQuery.of(context).size;
     return PageView(
       children: [
@@ -25,19 +29,25 @@ class CountryInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: size.height * 0.05),
-            _CountryAvatar(country: country),
-            _CountryCard(size: size, country: country),
+            _CountryAvatar(country: country), //country avatar
+            _CountryCard(
+              //country information card
+              size: size,
+              country: country,
+            ),
             SizedBox(height: size.height * 0.03),
             MaterialButton(
+              //search button
               height: size.height * 0.09,
               minWidth: size.width * 0.5,
               onPressed: () {
                 showSearch(
-                    context: context,
-                    delegate: CountrySearchDelegate(
-                      country: country,
-                      countryProvider: countryProvider,
-                    ));
+                  context: context,
+                  delegate: CountrySearchDelegate(
+                    country: country,
+                    countryProvider: countryProvider,
+                  ),
+                );
               },
               elevation: 0,
               splashColor: Colors.transparent,
@@ -57,6 +67,7 @@ class CountryInfo extends StatelessWidget {
 }
 
 class _CountryCard extends StatelessWidget {
+  // implements country card information <background, items>
   final CountryModel country;
   const _CountryCard({
     Key? key,
@@ -70,6 +81,7 @@ class _CountryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
+      //background
       margin: const EdgeInsets.all(15),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
@@ -81,7 +93,7 @@ class _CountryCard extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: _CountryItems(country: country),
+            child: _CountryItems(country: country), //items
           ),
         ),
       ),
@@ -90,6 +102,7 @@ class _CountryCard extends StatelessWidget {
 }
 
 class _CountryItems extends StatelessWidget {
+  //implements country information items with a table <population, borders, latitude, longitud, language, currency>
   final CountryModel country;
   const _CountryItems({
     Key? key,
@@ -106,15 +119,17 @@ class _CountryItems extends StatelessWidget {
         TableRow(
           children: [
             SingleCard(
+              //population card item
               icon: Icons.person,
               color: color,
               label: 'Population',
               text: format.output.compactNonSymbol,
             ),
             SingleCard(
+              //borders card item
               icon: Icons.flag,
               color: color,
-              label: 'Frontiers',
+              label: 'Borders',
               text: country.borders == null
                   ? 'No data'
                   : country.borders
@@ -127,17 +142,19 @@ class _CountryItems extends StatelessWidget {
         TableRow(
           children: [
             SingleCard(
+              //latitude card item
               icon: Icons.swap_vert,
               color: color,
-              label: 'Lat',
+              label: 'Latitude',
               text: country.latlng == null
                   ? 'no data'
                   : country.latlng![0].toString(),
             ),
             SingleCard(
+              //longitude card item
               icon: Icons.swap_horiz,
               color: color,
-              label: 'Lng',
+              label: 'Longitude',
               text: country.latlng == null
                   ? 'No data'
                   : country.latlng![1].toString(),
@@ -147,12 +164,14 @@ class _CountryItems extends StatelessWidget {
         TableRow(
           children: [
             SingleCard(
+              //language card item
               icon: Icons.announcement,
               color: color,
               label: 'Language',
               text: country.languages[0].name.toString(),
             ),
             SingleCard(
+              //currency card item
               icon: Icons.attach_money,
               color: color,
               label: 'Currency',
@@ -172,6 +191,7 @@ class _CountryItems extends StatelessWidget {
 }
 
 class _CountryAvatar extends StatelessWidget {
+  //implements avatar <avatar(flag), country name>
   final CountryModel country;
   const _CountryAvatar({
     Key? key,
@@ -184,11 +204,13 @@ class _CountryAvatar extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
+          //avatar(flag)
           backgroundImage: NetworkImage(country.flags.png),
           radius: size.width * 0.135,
         ),
         const SizedBox(height: 5),
         Text(
+          //country name
           country.name,
           textAlign: TextAlign.center,
           style: TextStyle(

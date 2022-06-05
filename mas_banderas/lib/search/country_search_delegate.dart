@@ -7,19 +7,21 @@ class CountrySearchDelegate extends SearchDelegate {
   final CountryModel? country;
   final CountryProvider? countryProvider;
 
-  CountrySearchDelegate({this.country, this.countryProvider}) {}
+  CountrySearchDelegate({this.country, this.countryProvider});
   @override
   List<Widget>? buildActions(BuildContext context) {
+    //implement clear delegate
     return [
       IconButton(
         icon: const Icon(Icons.delete),
-        onPressed: () => this.query = '',
+        onPressed: () => query = '',
       )
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
+    //implement to back screen icon
     return IconButton(
       icon: const Icon(Icons.arrow_left),
       onPressed: () => close(context, null),
@@ -28,11 +30,13 @@ class CountrySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    //return search items
     final countryProv = CountryProvider(query);
     if (query.trim().isEmpty) {
       return const Text('Not query value');
     }
     return FutureBuilder(
+      //future implements
       future: countryProv.displayCountry(query),
       builder: (_, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
@@ -48,6 +52,7 @@ class CountrySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    //suggestion: search a country by name
     return const ListTile(
       title: Center(
         child: Text(
@@ -63,6 +68,7 @@ class CountrySearchDelegate extends SearchDelegate {
   }
 
   Widget _showCountries(BuildContext context, CountryModel countries) {
+    //search item list view
     return ListView.builder(
       itemCount: 1,
       itemBuilder: (_, i) {

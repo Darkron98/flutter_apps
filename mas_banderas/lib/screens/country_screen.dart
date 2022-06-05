@@ -9,6 +9,7 @@ class CountryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //country screen
     final countryProvider = Provider.of<CountryProvider>(context);
     return Scaffold(
       body: Stack(
@@ -25,6 +26,7 @@ class CountryScreen extends StatelessWidget {
 }
 
 class _BackGround extends StatelessWidget {
+  //app background
   final boxDecoration = const BoxDecoration(
     gradient: LinearGradient(
       begin: Alignment.topCenter,

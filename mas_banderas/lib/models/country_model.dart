@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class CountryModel {
+  //country model
   CountryModel({
     required this.name,
     this.currencies,
@@ -27,6 +28,7 @@ class CountryModel {
       CountryModel.fromMap(json);
 
   factory CountryModel.fromMap(Map<String, dynamic> json) => CountryModel(
+        //model map
         name: json["name"],
         currencies: json["currencies"] == null
             ? null

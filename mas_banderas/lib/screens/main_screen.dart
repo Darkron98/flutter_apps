@@ -7,6 +7,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var boxDecoration = const BoxDecoration(
+      //main screen background
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -44,14 +45,16 @@ class MainContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     var textStyle1 = TextStyle(
+      //logotype style
       fontSize: size.width * 0.275,
       fontWeight: FontWeight.bold,
-      color: Color.fromARGB(255, 236, 217, 106),
+      color: const Color.fromARGB(255, 236, 217, 106),
     );
     var textStyle2 = TextStyle(
+      //isotype style
       fontSize: size.width * 0.175,
       fontWeight: FontWeight.bold,
-      color: Color.fromARGB(255, 133, 114, 207),
+      color: const Color.fromARGB(255, 133, 114, 207),
     );
 
     return SafeArea(
@@ -62,6 +65,7 @@ class MainContent extends StatelessWidget {
         children: [
           SizedBox(height: size.height * 0.09),
           Row(
+            //app logo
             children: [
               Text('+', style: textStyle1),
               Text('Flags', style: textStyle2),
@@ -70,8 +74,9 @@ class MainContent extends StatelessWidget {
           ),
           Expanded(child: Container()),
           Icon(
+            //drag dow indicator
             Icons.keyboard_arrow_down,
-            color: Color.fromARGB(255, 95, 82, 148),
+            color: const Color.fromARGB(255, 95, 82, 148),
             size: size.width * 0.305,
           ),
         ],
@@ -81,6 +86,7 @@ class MainContent extends StatelessWidget {
 }
 
 class BackGround extends StatelessWidget {
+  //main screen background
   const BackGround({
     Key? key,
   }) : super(key: key);
@@ -89,14 +95,14 @@ class BackGround extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      color: Color(0xff2C2645),
+      color: const Color(0xff2C2645),
       width: size.width,
       alignment: Alignment.topCenter,
       child: Column(
         children: [
           SizedBox(height: size.height * 0.33),
-          Image(
-            image: AssetImage('assets/globe.gif'),
+          const Image(
+            image: AssetImage('assets/globe.gif'), //background animation
             width: double.infinity,
           ),
         ],
@@ -106,6 +112,7 @@ class BackGround extends StatelessWidget {
 }
 
 class Title extends StatelessWidget {
+  //title implementation
   const Title({
     Key? key,
   }) : super(key: key);
@@ -113,7 +120,7 @@ class Title extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
+      children: const [
         BackGround(),
         MainContent(),
       ],

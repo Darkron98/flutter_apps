@@ -4,7 +4,7 @@ import 'package:mas_banderas/providers/country_provider.dart';
 import 'package:provider/provider.dart';
 import '../screens/screens.dart';
 
-void main() => runApp(AppState());
+void main() => runApp(const AppState());
 
 class AppState extends StatelessWidget {
   const AppState({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'title_screen',
       routes: {
         'title_screen': (_) => MainScreen(),
-        'main_screen': (_) => CountryScreen(),
+        'main_screen': (_) => const CountryScreen(),
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mas_banderas/models/country_model.dart';
-import 'package:mas_banderas/providers/country_provider.dart';
+
+import '../models/models.dart';
+import '../providers/providers.dart';
 
 class CountrySearchDelegate extends SearchDelegate {
   final CountryModel? country;
@@ -11,7 +12,7 @@ class CountrySearchDelegate extends SearchDelegate {
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.delete),
+        icon: const Icon(Icons.delete),
         onPressed: () => this.query = '',
       )
     ];
@@ -20,16 +21,16 @@ class CountrySearchDelegate extends SearchDelegate {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_left),
-      onPressed: () => this.close(context, null),
+      icon: const Icon(Icons.arrow_left),
+      onPressed: () => close(context, null),
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    final countryProv = new CountryProvider(query);
-    if (query.trim().length == 0) {
-      return Text('Not query value');
+    final countryProv = CountryProvider(query);
+    if (query.trim().isEmpty) {
+      return const Text('Not query value');
     }
     return FutureBuilder(
       future: countryProv.displayCountry(query),
@@ -37,7 +38,7 @@ class CountrySearchDelegate extends SearchDelegate {
         if (snapshot.hasData) {
           return _showCountries(context, snapshot.data);
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(strokeWidth: 4),
           );
         }
@@ -47,7 +48,7 @@ class CountrySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return ListTile(
+    return const ListTile(
       title: Center(
         child: Text(
           'Search a country by name',
@@ -79,7 +80,7 @@ class CountrySearchDelegate extends SearchDelegate {
           onTap: () {
             countryProvider!.country = countries;
             countryProvider!.notifyListeners();
-            this.close(context, null);
+            close(context, null);
           },
         );
       },

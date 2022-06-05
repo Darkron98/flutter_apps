@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import '../screens/screens.dart';
 
 class MainScreen extends StatelessWidget {
+  const MainScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    var boxDecoration = BoxDecoration(
+    var boxDecoration = const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -21,9 +23,9 @@ class MainScreen extends StatelessWidget {
       body: Container(
         decoration: boxDecoration,
         child: PageView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.vertical,
-          children: [
+          children: const [
             Title(),
             CountryScreen(),
           ],

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mas_banderas">
    <application
-        android:label="mas_banderas"
+        android:label="Plus World"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

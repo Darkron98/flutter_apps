@@ -23,43 +23,39 @@ class CountryInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     // implements screen structure <avatar, country information card, search button>
     final size = MediaQuery.of(context).size;
-    return PageView(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: size.height * 0.05),
-            _CountryAvatar(country: country), //country avatar
-            _CountryCard(
-              //country information card
-              size: size,
-              country: country,
-            ),
-            SizedBox(height: size.height * 0.03),
-            MaterialButton(
-              //search button
-              height: size.height * 0.09,
-              minWidth: size.width * 0.5,
-              onPressed: () {
-                showSearch(
-                  context: context,
-                  delegate: CountrySearchDelegate(
-                    country: country,
-                    countryProvider: countryProvider,
-                  ),
-                );
-              },
-              elevation: 0,
-              splashColor: Colors.transparent,
-              child: const Icon(
-                Icons.search,
-                size: 40,
-                color: Colors.white,
+        SizedBox(height: size.height * 0.06),
+        _CountryAvatar(country: country), //country avatar
+        _CountryCard(
+          //country information card
+          size: size,
+          country: country,
+        ),
+        SizedBox(height: size.height * 0.025),
+        MaterialButton(
+          //search button
+          height: size.height * 0.09,
+          minWidth: size.width * 0.5,
+          onPressed: () {
+            showSearch(
+              context: context,
+              delegate: CountrySearchDelegate(
+                country: country,
+                countryProvider: countryProvider,
               ),
-              shape: const StadiumBorder(),
-              color: const Color.fromARGB(55, 255, 255, 255),
-            ),
-          ],
+            );
+          },
+          elevation: 0,
+          splashColor: Colors.transparent,
+          child: const Icon(
+            Icons.search,
+            size: 40,
+            color: Colors.white,
+          ),
+          shape: const StadiumBorder(),
+          color: const Color.fromARGB(55, 255, 255, 255),
         ),
       ],
     );
@@ -198,6 +194,14 @@ class _CountryAvatar extends StatelessWidget {
     required this.country,
   }) : super(key: key);
 
+  ImageProvider _getImage() {
+    if (country.flags.png == 'no_data') {
+      return AssetImage('assets/placeholder.jpg');
+    } else {
+      return NetworkImage(country.flags.png);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -205,7 +209,9 @@ class _CountryAvatar extends StatelessWidget {
       children: [
         CircleAvatar(
           //avatar(flag)
-          backgroundImage: NetworkImage(country.flags.png),
+          backgroundColor: Colors.transparent,
+          backgroundImage: AssetImage('assets/load.gif'),
+          foregroundImage: _getImage(),
           radius: size.width * 0.135,
         ),
         const SizedBox(height: 5),

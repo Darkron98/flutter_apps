@@ -10,10 +10,7 @@ class CountryProvider extends ChangeNotifier {
     name: 'Country name',
     languages: [Language(iso6392: 'No data', name: 'No data')],
     flag: 'flag',
-    flags: Flags(
-        png:
-            'https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png',
-        svg: ''),
+    flags: Flags(png: 'no_data', svg: 'no_data'),
     population: 0,
   );
 
@@ -21,20 +18,22 @@ class CountryProvider extends ChangeNotifier {
     this.displayCountry(name);
   }
 
-  Future<Map<String, dynamic>> _getJsonData(String name) async {
+  Future _getJsonData(String name) async {
     //get data from API
     final url =
         Uri.parse('https://restcountries.com/v2/name/' + name); //http parse
     final response = await http.get(url); //http request
+    final List<dynamic> respList = json.decode(response.body) as List<dynamic>;
 
-    final map = Map.fromIterable(json.decode(response.body)
-        as List); //response parsing List<dynamic> to Map<String, dynamic>
-    final List<dynamic> keyList =
-        map.keys.toList(); //parse map keys to list<dynamic>
-    final responseMap = Map<String, dynamic>.from(
-        keyList[0]); //parse keylist to map<String, dynamic>
+    return (respList);
+  }
 
-    return (responseMap);
+  searchDelegateResp(String name) async {
+    final url =
+        Uri.parse('https://restcountries.com/v2/name/' + name); //http parse
+    final response = await http.get(url);
+    final List<dynamic> respList = json.decode(response.body) as List<dynamic>;
+    return respList.map((obj) => CountryModel.fromJson(obj)).toList();
   }
 
   displayCountry(String name) async {
@@ -42,21 +41,21 @@ class CountryProvider extends ChangeNotifier {
       //exception
       final jsonData = await _getJsonData(name);
       final response =
-          CountryModel.fromJson(jsonData); //response maping in model
-      displauCountryConsole(response); // print model data in debug console
+          CountryModel.fromJson(jsonData[0]); //response maping in model
+      displayCountryConsole(response); // print model data in debug console
       country = response;
       notifyListeners();
       return response;
     } catch (e) {
       final response = country;
       country = response;
-      displauCountryConsole(response);
+      displayCountryConsole(response);
       notifyListeners();
       return response;
     }
   }
 
-  displauCountryConsole(CountryModel country) {
+  displayCountryConsole(CountryModel country) {
     //print model data in debug console
     final nombre = country.name;
     final pop = country.population;

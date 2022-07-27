@@ -20,7 +20,7 @@ class CountryModel {
   Translations? translations;
   List<double>? latlng;
   List<String>? borders;
-  String flag;
+  String? flag;
   int population;
   Flags flags;
 

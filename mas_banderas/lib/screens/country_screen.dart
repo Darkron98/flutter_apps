@@ -11,42 +11,9 @@ class CountryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     //country screen
     final countryProvider = Provider.of<CountryProvider>(context);
-    return Scaffold(
-      body: Stack(
-        children: [
-          _BackGround(),
-          CountryInfo(
-            countryProvider: countryProvider,
-            country: countryProvider.country,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _BackGround extends StatelessWidget {
-  //app background
-  final boxDecoration = const BoxDecoration(
-    gradient: LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      stops: [0.2, 0.8],
-      colors: [
-        Color(0xff2C2645),
-        Color(0xff202333),
-      ],
-    ),
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: boxDecoration,
-        ),
-      ],
+    return CountryInfo(
+      countryProvider: countryProvider,
+      country: countryProvider.country,
     );
   }
 }

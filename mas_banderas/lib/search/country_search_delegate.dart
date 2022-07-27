@@ -33,11 +33,20 @@ class CountrySearchDelegate extends SearchDelegate {
     //return search items
     final countryProv = CountryProvider(query);
     if (query.trim().isEmpty) {
-      return const Text('Not query value');
+      return const Center(
+        child: Text(
+          'Search a country by name',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+          ),
+        ),
+      );
     }
     return FutureBuilder(
       //future implements
-      future: countryProv.displayCountry(query),
+      future: countryProv.searchDelegateResp(query),
       builder: (_, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return _showCountries(context, snapshot.data);
@@ -67,24 +76,24 @@ class CountrySearchDelegate extends SearchDelegate {
     );
   }
 
-  Widget _showCountries(BuildContext context, CountryModel countries) {
+  Widget _showCountries(BuildContext context, List<CountryModel> countries) {
     //search item list view
     return ListView.builder(
-      itemCount: 1,
+      itemCount: countries.length,
       itemBuilder: (_, i) {
         return ListTile(
           leading: CircleAvatar(
-            backgroundImage: NetworkImage(countries.flags.png),
+            backgroundImage: NetworkImage(countries[i].flags.png),
           ),
-          title: Text(countries.name),
-          subtitle: Text(countries.languages[0].name),
-          trailing: Text(countries.currencies == null
+          title: Text(countries[i].name),
+          subtitle: Text(countries[i].languages[0].name),
+          trailing: Text(countries[i].currencies == null
               ? '---'
-              : countries.currencies![0].code +
+              : countries[i].currencies![0].code +
                   ' : ' +
-                  countries.currencies![0].symbol),
+                  countries[i].currencies![0].symbol),
           onTap: () {
-            countryProvider!.country = countries;
+            countryProvider!.country = countries[i];
             countryProvider!.notifyListeners();
             close(context, null);
           },

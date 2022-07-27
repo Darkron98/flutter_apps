@@ -21,16 +21,20 @@ class MainScreen extends StatelessWidget {
 
     return Scaffold(
       ///backgroundColor: Color(0xff57bcd6),
-      body: Container(
-        decoration: boxDecoration,
-        child: PageView(
-          physics: const BouncingScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          children: const [
-            Title(),
-            CountryScreen(),
-          ],
-        ),
+      body: Stack(
+        children: [
+          _BackGround(),
+          Container(
+            child: PageView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              children: const [
+                Title(),
+                CountryScreen(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -68,42 +72,22 @@ class MainContent extends StatelessWidget {
             //app logo
             children: [
               Text('+', style: textStyle1),
-              Text('Flags', style: textStyle2),
+              Text('World', style: textStyle2),
             ],
             mainAxisAlignment: MainAxisAlignment.center,
+          ),
+          SizedBox(height: size.height * 0.08),
+          const CircleAvatar(
+            backgroundImage:
+                AssetImage('assets/globe.gif'), //background animation
+            radius: 150,
           ),
           Expanded(child: Container()),
           Icon(
             //drag dow indicator
             Icons.keyboard_arrow_down,
-            color: const Color.fromARGB(255, 95, 82, 148),
-            size: size.width * 0.305,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class BackGround extends StatelessWidget {
-  //main screen background
-  const BackGround({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Container(
-      color: const Color(0xff2C2645),
-      width: size.width,
-      alignment: Alignment.topCenter,
-      child: Column(
-        children: [
-          SizedBox(height: size.height * 0.33),
-          const Image(
-            image: AssetImage('assets/globe.gif'), //background animation
-            width: double.infinity,
+            color: Color.fromARGB(255, 53, 46, 83),
+            size: size.width * 0.25,
           ),
         ],
       ),
@@ -119,10 +103,36 @@ class Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MainContent();
+  }
+}
+
+class _BackGround extends StatelessWidget {
+  const _BackGround({
+    Key? key,
+  }) : super(key: key);
+  //app background
+  final boxDecoration = const BoxDecoration(
+    gradient: LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: [0.2, 0.8],
+      colors: [
+        Color(0xff2C2645),
+        Color(0xff202333),
+      ],
+    ),
+  );
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Stack(
-      children: const [
-        BackGround(),
-        MainContent(),
+      children: [
+        Container(
+          decoration: boxDecoration,
+          width: size.width,
+          alignment: Alignment.topCenter,
+        ),
       ],
     );
   }
